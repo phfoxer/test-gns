@@ -1,11 +1,24 @@
-@import './../../colors.scss';
+@import "./../../colors.scss";
 button {
   background-color: $button-bg;
-  padding: 8px 15px;
-  border-radius: 20px;
+  padding: 0px 20px;
+  border-radius: 35px;
   border: 0;
   color: $button-txt;
+  cursor: pointer;
+  font-size: 16px;
+  min-height: 38px;
+  line-height: 38px;
+  text-align: center;
   &:disabled {
-    background-color:  $button-bg-disabled;
+    background-color: $button-bg-disabled;
+    color: $button-txt-disabled;
+  }
+  &:disabled:hover {
+    background-color: $button-bg-disabled;
+    color: $button-txt-disabled;
+  }
+  &:hover {
+    background-color: $button-bg-hover;
   }
 }

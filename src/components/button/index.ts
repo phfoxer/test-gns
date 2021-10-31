@@ -1,6 +1,6 @@
 import styles from './button.styles.scss';
 import Component from '../base-component';
-
+import '../loader'
 
 
 
@@ -19,7 +19,17 @@ class GnsButton extends HTMLElement {
   connectedCallback(): void {
     const shadowroot = this.shadowRoot;
     const button = shadowroot.getElementById('button');
-    button.innerText = this.getAttribute('label');
+
+    if (this.getAttribute('disabled') === 'true') {
+      button.setAttribute('disabled', 'true');
+    }
+    if (this.getAttribute('loading') === 'true') {
+      button.innerHTML = `<gns-loader></gns-loader>`;
+    }
+
+    if (!this.getAttribute('loading') || this.getAttribute('loading') === 'false') {
+      button.innerHTML = `<div>${this.getAttribute('label')}</div>`;
+    }
   }
 }
 
