@@ -1,6 +1,13 @@
 @import "./colors.scss";
+@font-face {
+  font-family: "Open Sans";
+  src: local("Open Sans"), local("OpenSans"), url("src/styles/fonts/OpenSans-Regular.ttf") format("woff");
+}
 .app-content {
   margin: 10px 15px;
+}
+* {
+  font-family: "Open Sans", sans-serif;
 }
 h1 {
   &.header {

@@ -25,8 +25,7 @@ class UserList implements Page {
     });
   }
 
-
-  updateTable = () => {
+  tableRender = () => {
     this.userService.getUsers().then((users: IUser[]) => {
       document.getElementById('userList').innerHTML = users.map((user: IUser) => `
         <tr id="${user.cpf}">
@@ -46,6 +45,28 @@ class UserList implements Page {
     });
   }
 
+  public onInit = () => {
+    // Atualiza tabela de items
+    this.tableRender();
+    // Novo usuario
+    const cadastroEvent = document.getElementById('cadastrar');
+    cadastroEvent.addEventListener(
+      "click",
+      () => {
+        window.location.href = '/#/form';
+      }
+      , false
+    );
+    // Atualizar tabela
+    const atualizarEvent = document.getElementById('atualizar');
+    atualizarEvent.addEventListener(
+      "click",
+      this.tableRender,
+      false
+    );
+
+  }
+
   public render = () => {
     const content = document.createElement('template');
     content.innerHTML = `
@@ -63,25 +84,8 @@ class UserList implements Page {
         </thead>
         <tbody id="userList"></body>
       </table>
-
     `;
-
-    document.addEventListener('DOMContentLoaded', () => {
-      // Atualiza tabela de items
-      this.updateTable();
-      // Novo usuario
-      const btnCadastrar = document.getElementById('cadastrar');
-      btnCadastrar.addEventListener(
-        "click",
-        () => {
-          window.location.href = '/#/form';
-        }
-        , false
-      );
-      // Atualizar tabela
-      const btnAtualizar = document.getElementById('atualizar');
-      btnAtualizar.addEventListener("click", this.updateTable, false);
-    });
+    document.addEventListener('DOMContentLoaded', () => this.onInit());
     return content;
   }
 }

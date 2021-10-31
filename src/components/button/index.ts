@@ -19,17 +19,25 @@ class GnsButton extends HTMLElement {
   connectedCallback(): void {
     const shadowroot = this.shadowRoot;
     const button = shadowroot.getElementById('button');
-
-    if (this.getAttribute('disabled') === 'true') {
+    const disabled = this.getAttribute('disabled') || 'false';
+    const loading = this.getAttribute('loading') || 'false';
+    if (disabled === 'true') {
       button.setAttribute('disabled', 'true');
-    }
-    if (this.getAttribute('loading') === 'true') {
       button.innerHTML = `<gns-loader></gns-loader>`;
     }
 
-    if (!this.getAttribute('loading') || this.getAttribute('loading') === 'false') {
+    if (loading === 'false') {
       button.innerHTML = `<div>${this.getAttribute('label')}</div>`;
     }
+    // event
+    button.onclick = () => {
+      this.dispatchEvent(new CustomEvent('onpress', {
+        detail: { loading: loading === 'true', disabled: disabled === 'true' },
+      }));
+      eval(this.getAttribute('onpress'))
+    }
+
+
   }
 }
 

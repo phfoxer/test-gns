@@ -13,6 +13,7 @@ button {
   &:disabled {
     background-color: $button-bg-disabled;
     color: $button-txt-disabled;
+    cursor: initial;
   }
   &:disabled:hover {
     background-color: $button-bg-disabled;

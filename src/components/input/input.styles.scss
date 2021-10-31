@@ -1,5 +1,8 @@
 @import "./../../colors.scss";
-
+label {
+  color: $input-txt;
+  font-size: 12px;
+}
 input {
   background-color: transparent;
   border: 0;
@@ -7,11 +10,10 @@ input {
   border-bottom: 1px solid $input-txt-border;
   color: $input-txt;
   padding: 8px 15px;
-  font-size: 16px;
+  font-size: 14px;
   width: -moz-available;
   width: -webkit-fill-available;
   width: fill-available;
-  margin: 5px;
   &:focus {
     color: $input-txt-focus;
   }

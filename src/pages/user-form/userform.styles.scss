@@ -3,6 +3,8 @@
   .form-group {
     display: grid;
     grid-template-columns: 50% 50%;
-   
+   .form-control {
+     margin: 15px 20px;
+   }
   }
 }
