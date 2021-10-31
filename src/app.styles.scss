@@ -1,0 +1,16 @@
+@import "./colors.scss";
+.app-content {
+  margin: 10px 15px;
+}
+h1 {
+  &.header {
+    color: $button-bg;
+    border-bottom: 1px solid $button-txt-disabled;
+    line-height: 60px;
+  }
+}
+.controls {
+  display: grid;
+  grid-template-columns: 110px 110px calc(100% - 220px);
+  margin-bottom: 20px;
+}

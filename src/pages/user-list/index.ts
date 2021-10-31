@@ -50,8 +50,11 @@ class UserList implements Page {
     const content = document.createElement('template');
     content.innerHTML = `
       <style>${styles}</style>
-      <gns-button label="Novo usuário" id="cadastrar"></gns-button>
-      <gns-button label="Atualizar" id="atualizar"></gns-button>
+      <div class="controls">
+        <gns-button label="Atualizar" id="atualizar"></gns-button>
+        <gns-button label="Novo" id="cadastrar"></gns-button>
+        <div></div>
+      </div>
       <table>
         <thead>
             <tr>
@@ -60,6 +63,7 @@ class UserList implements Page {
         </thead>
         <tbody id="userList"></body>
       </table>
+
     `;
 
     document.addEventListener('DOMContentLoaded', () => {

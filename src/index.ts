@@ -2,6 +2,7 @@ import { IRouter } from './interfaces';
 import NotFound from './pages/not-found';
 import UserForm from './pages/user-form';
 import UserList from './pages/user-list';
+import styles from './app.styles.scss';
 
 class AppComponent {
 
@@ -31,7 +32,15 @@ class AppComponent {
   }
 
   render = (hash: string) => {
-    app.innerHTML = `<div id="test" style="padding:20px">${this.page(hash)}</div>`;
+    app.innerHTML = `
+    <style>${styles}</style>
+    <div class="app-content">
+     <h1 class="header">Genesis</h1>
+      <div class="page">
+        ${this.page(hash)}
+      </div>
+    </div>
+  `;
   }
 
   // render page
