@@ -76,14 +76,16 @@ class UserList implements Page {
         <gns-button label="Novo" id="cadastrar"></gns-button>
         <div></div>
       </div>
-      <table>
-        <thead>
-            <tr>
-              ${this.columns.map(colunm => `<th>${colunm}</th>`).join('')}
-            </tr>
-        </thead>
-        <tbody id="userList"></body>
-      </table>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+              <tr>
+                ${this.columns.map(colunm => `<th>${colunm}</th>`).join('')}
+              </tr>
+          </thead>
+          <tbody id="userList"></body>
+        </table>
+      </div>
     `;
     document.addEventListener('DOMContentLoaded', () => this.onInit());
     return content;

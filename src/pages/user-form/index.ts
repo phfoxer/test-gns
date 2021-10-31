@@ -4,6 +4,7 @@ import styles from './userform.styles.scss';
 import '../../components/button';
 import '../../components/input';
 import { Page } from '..';
+import { UserService } from '../../services/user.service';
 
 interface IInput {
   id: string;
@@ -15,13 +16,17 @@ interface IInput {
 }
 
 class UserForm implements Page {
-
+  private userService: UserService;
   private user: IUser = {
     name: '',
     cpf: '',
     email: '',
     phone: ''
   };
+
+  constructor() {
+    this.userService = new UserService();
+  }
 
   public formValidationEvent = () => {
     const user = Object.values(this.user);
@@ -38,10 +43,18 @@ class UserForm implements Page {
 
   public onSubmitEvent = () => {
     const btnCadastrar = document.getElementById('cadastrar');
-    btnCadastrar.addEventListener("onpress", ({detail:{disabled, loading}}: any) => {
+    btnCadastrar.addEventListener("onpress", ({ detail: { disabled, loading } }: any) => {
       if (!disabled && !loading) {
-        console.log('Enviar', this.user);
-        
+        this.buttonSendRender('true', 'false');
+        this.userService.addUser(this.user).then(() => {
+          this.user = {
+            name: '',
+            cpf: '',
+            email: '',
+            phone: ''
+          };
+          this.formRender(this.user);
+        });
       }
     },
       false
@@ -118,15 +131,15 @@ class UserForm implements Page {
       label: 'E-mail',
       placeholder: 'Informe um e-mail válido'
     });
+    // Renderiza botão de envio
+    this.buttonSendRender('false', 'true');
+    // Adiciona eventos dos inputs
+    this.inputChangeEvent();
   }
 
   public onInit = () => {
-    this.buttonSendRender('false', 'true');
     // Render do formulário
     this.formRender(this.user);
-    this.inputChangeEvent();
-    // Novo usuario
-
     // Voltar
     const btnVoltar = document.getElementById('voltar');
     btnVoltar.addEventListener(
@@ -136,9 +149,6 @@ class UserForm implements Page {
       },
       false
     );
-    // Verificando o estado do formulário
-
-
   }
 
   public render = () => {
