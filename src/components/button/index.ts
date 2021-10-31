@@ -18,7 +18,7 @@ class GnsButton extends HTMLElement {
 
   connectedCallback(): void {
     const shadowroot = this.shadowRoot;
-    const button = shadowroot.getElementById('button')
+    const button = shadowroot.getElementById('button');
     button.innerText = this.getAttribute('label');
   }
 }

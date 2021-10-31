@@ -8,14 +8,42 @@ import { Page } from '..';
 
 class UserList implements Page {
   private userService: UserService;
-  private columns: string[] = ['Nome completo', 'CPF', 'Telefone', 'Email'];
+  private columns: string[] = ['Nome completo', 'CPF', 'Telefone', 'Email', ''];
 
   constructor() {
     this.userService = new UserService();
   }
 
-  public cadastrar = () => {
-    alert(5)
+  public removeItem = () => {
+    const excluirList = document.getElementsByClassName('removerUsuario');
+    Array.from(excluirList).forEach(function (element) {
+      element.addEventListener('click', (event: any) => {
+        const id = event.target.id;
+        const [cpf] = id.split(':');
+        document.getElementById(cpf).remove();
+      });
+    });
+  }
+
+
+  updateTable = () => {
+    this.userService.getUsers().then((users: IUser[]) => {
+      document.getElementById('userList').innerHTML = users.map((user: IUser) => `
+        <tr id="${user.cpf}">
+          <td>${user.name}</td>
+          <td>${user.cpf}</td>
+          <td>${user.phone}</td>
+          <td>${user.email}</td>
+          <td>
+            <gns-button 
+              label="Excluir" 
+              class="removerUsuario" 
+              id="${user.cpf}:cpf">
+            </gns-button>
+          </td>
+        </tr>`).join('');
+      this.removeItem();
+    });
   }
 
   public render = () => {
@@ -23,6 +51,7 @@ class UserList implements Page {
     content.innerHTML = `
       <style>${styles}</style>
       <gns-button label="Novo usuário" id="cadastrar"></gns-button>
+      <gns-button label="Atualizar" id="atualizar"></gns-button>
       <table>
         <thead>
             <tr>
@@ -34,16 +63,20 @@ class UserList implements Page {
     `;
 
     document.addEventListener('DOMContentLoaded', () => {
-      this.userService.getUsers().then((users: IUser[]) => {
-        document.getElementById('userList').innerHTML = users.map((user: IUser) => `<tr>
-              <td>${user.name}</td>
-              <td>${user.cpf}</td>
-              <td>${user.phone}</td>
-              <td>${user.email}</td>
-        </tr>`).join('');
-      })
+      // Atualiza tabela de items
+      this.updateTable();
+      // Novo usuario
       const btnCadastrar = document.getElementById('cadastrar');
-      btnCadastrar.addEventListener("click", this.cadastrar, false);
+      btnCadastrar.addEventListener(
+        "click",
+        () => {
+          window.location.href = '/#/form';
+        }
+        , false
+      );
+      // Atualizar tabela
+      const btnAtualizar = document.getElementById('atualizar');
+      btnAtualizar.addEventListener("click", this.updateTable, false);
     });
     return content;
   }

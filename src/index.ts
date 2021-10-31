@@ -7,41 +7,48 @@ class AppComponent {
 
   private routes: IRouter[] = [
     {
-      url: '',
+      url: '/',
       component: new UserList()
     },
     {
-      url: 'list',
+      url: '/list',
       component: new UserList()
-    }/* ,
-  {
-    url: 'form',
-    component: UserForm()
-  } */
+    },
+    {
+      url: '/form',
+      component: new UserForm()
+    }
   ];
 
   constructor() {
-    app.innerHTML = `<div style="padding:20px">${this.page()}</div>`;
+    let hash = window.location.hash.slice(1);
+
+    window.addEventListener('hashchange', () => {
+      location.reload();
+    });
+
+    this.render(hash);
+  }
+
+  render = (hash: string) => {
+    app.innerHTML = `<div id="test" style="padding:20px">${this.page(hash)}</div>`;
   }
 
   // render page
-  outletRouter = () => {
+  outletRouter = (uri: string) => {
     const notfound: IRouter = {
       url: '**',
       component: new NotFound()
     }
-
-    const [, url] = window.location.hash.split('/');
-
-    let page = this.routes.filter((_router: IRouter) => _router.url === (url || ''));
+    let page = this.routes.filter((_router: IRouter) => _router.url === (uri || '/'));
     if (!page.length) {
       page = [notfound];
     }
     return page.shift()
   }
 
-  page = (): string => {
-    return this.outletRouter().component.render().innerHTML;
+  page = (uri: string): string => {
+    return this.outletRouter(uri).component.render().innerHTML;
   }
 
 }
