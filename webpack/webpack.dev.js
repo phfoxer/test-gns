@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const {
   prod_Path,
@@ -11,6 +12,9 @@ const {
 } = require('./loader');
 
 module.exports = {
+   resolve: {
+    plugins: [new TsconfigPathsPlugin({ configFile: "tsconfig.json" })]
+  },
   entry: {
     main: './' + src_Path + '/index.ts'
   },
@@ -19,7 +23,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, prod_Path),
-    filename: '[name].[chunkhash].js'
+    filename: '[name].[chunkhash].js',
+    libraryTarget: 'umd'
   },
   devtool: 'source-map',
   devServer: {

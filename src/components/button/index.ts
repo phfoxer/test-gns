@@ -1,24 +1,26 @@
 import styles from './button.styles.scss';
-const template = document.createElement('template');
+import Component from '../base-component';
 
-template.innerHTML = `<button></button>`;
+
+
+
+
+@Component({
+  selector: 'gns-button',
+  template: `<button id="button"></button>`,
+  style: styles
+})
 class GnsButton extends HTMLElement {
+
   constructor() {
     super();
-    const style = document.createElement('style');
-    style.textContent = styles;
-    const shadowRoot = this.attachShadow({ mode: 'open' });
-    const button = document.createElement('button');
-    button.textContent = 'Here is some blue text.';
-    button.disabled = true;
-    shadowRoot.appendChild(style);
-    shadowRoot.appendChild(button);
   }
 
-  connectedCallback() {
-
+  connectedCallback(): void {
+    const shadowroot = this.shadowRoot;
+    const button = shadowroot.getElementById('button')
+    button.innerText = this.getAttribute('label');
   }
 }
-window.customElements.define('gns-button', GnsButton);
 
 

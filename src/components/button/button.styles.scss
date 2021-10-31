@@ -1,6 +1,11 @@
+@import './../../colors.scss';
 button {
-  background-color: #000;
+  background-color: $button-bg;
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 0;
+  color: $button-txt;
   &:disabled {
-    background-color: #f00;
+    background-color:  $button-bg-disabled;
   }
 }
